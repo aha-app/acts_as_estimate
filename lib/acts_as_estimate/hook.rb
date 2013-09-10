@@ -1,4 +1,7 @@
 module ActsAsEstimate::Hook
+  UNITS_STORY_POINTS = 10
+  UNITS_MINUTES = 20
+  
   def acts_as_estimate(*args)
     field_name = args[0].to_sym
     options = args.extract_options!
@@ -6,6 +9,10 @@ module ActsAsEstimate::Hook
     include ActsAsEstimate::InstanceMethods
     
     class_eval <<-EOV
+      def estimate_units
+        read_attribute(:#{options[:units_field]})
+      end
+      
       def #{field_name}()
         read_estimate_field(field_name)
       end
