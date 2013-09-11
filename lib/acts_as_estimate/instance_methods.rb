@@ -13,7 +13,7 @@ module ActsAsEstimate::InstanceMethods
   
   def write_estimate_field(field_name, new_value)
     new_value.strip!
-    if work_units == ActsAsEstimate::ESTIMATE_UNITS_STORY_POINTS
+    if estimate_units == ActsAsEstimate::ESTIMATE_UNITS_STORY_POINTS
       send("#{field_name}=", new_value.gsub(/p/, ""))
     else
       if new_value =~ /^[0-9]+$/
