@@ -1,10 +1,12 @@
 require 'rails'
 require 'acts_as_estimate'
 
-module ActsAsAwesome
+module ActsAsEstimate
   class Railtie < Rails::Railtie
-    config.to_prepare do
-      ApplicationController.send(:extend, ActsAsEstimate::Hook)
+    initializer 'acts_as_estimate.insert_into_active_record' do
+      ActiveSupport.on_load :active_record do
+        ActiveRecord::Base.send(:extend, ActsAsEstimate::Hook)
+      end
     end
   end
 end

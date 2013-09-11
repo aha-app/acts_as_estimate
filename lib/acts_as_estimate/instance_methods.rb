@@ -2,7 +2,7 @@ module ActsAsEstimate::InstanceMethods
   def read_estimate_field(field_name)
     val = read_attribute(field_name)
     if val
-      if estimate_units == UNITS_STORY_POINTS
+      if estimate_units == ESTIMATE_UNITS_STORY_POINTS
         "#{val}p"
       else
         ChronicDuration.output(val * 60, format: :short)
@@ -12,7 +12,7 @@ module ActsAsEstimate::InstanceMethods
   
   def write_estimate_field(field_name, new_value)
     new_value.strip!
-    if work_units == UNITS_STORY_POINTS
+    if work_units == ESTIMATE_UNITS_STORY_POINTS
       write_attribute(field_name, new_value.gsub(/p/, ""))
     else
       if new_value =~ /^[0-9]+$/
