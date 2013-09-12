@@ -1,14 +1,7 @@
 module ActsAsEstimate::InstanceMethods
   def read_estimate_field(field_name)
     val = send(field_name)
-    logger.debug("READING ATTR: #{field_name.inspect} #{val.inspect} #{self.inspect}")
-    unless val.nil?
-      if estimate_units == ActsAsEstimate::ESTIMATE_UNITS_STORY_POINTS
-        "#{val}p"
-      else
-        ChronicDuration.output(val * 60, format: :short)
-      end
-    end
+    estimate_value_to_text(val)
   end
   
   def write_estimate_field(field_name, new_value)
@@ -24,4 +17,17 @@ module ActsAsEstimate::InstanceMethods
       send("#{field_name}=", duration / 60) if duration
     end
   end
+  
+  def estimate_value_to_text(value)
+    unless value.nil?
+      if estimate_units == ActsAsEstimate::ESTIMATE_UNITS_STORY_POINTS
+        "#{value}p"
+      elsif value == 0
+        "0"
+      else
+        ChronicDuration.output(value * 60, format: :short)
+      end
+    end
+  end
+  
 end
