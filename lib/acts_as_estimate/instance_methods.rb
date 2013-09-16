@@ -7,7 +7,7 @@ module ActsAsEstimate::InstanceMethods
   def write_estimate_field(field_name, new_value)
     new_value.strip!
     if estimate_units == ActsAsEstimate::ESTIMATE_UNITS_STORY_POINTS
-      send("#{field_name}=", new_value.gsub(/p/, ""))
+      send("#{field_name}=", new_value.gsub(/p/, "").to_i)
     else
       if new_value =~ /^[0-9]+$/
         # If only a number is entered, assume units are days.

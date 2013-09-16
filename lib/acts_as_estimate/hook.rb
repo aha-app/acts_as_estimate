@@ -8,7 +8,7 @@ module ActsAsEstimate::Hook
   
     class_eval <<-EOV
       def estimate_units
-        read_attribute(:#{options[:units_field]})
+        send(:#{options[:units_field]})
       end
     
       def #{field_name}_text
