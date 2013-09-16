@@ -25,5 +25,5 @@ Gem::Specification.new do |s|
   # Dependencies (installed via 'bundle install')...
   s.add_development_dependency("bundler", [">= 1.0.0"])
   s.add_development_dependency("activerecord")
-  s.add_development_dependency("chronic_duration")
+  #s.add_development_dependency("chronic_duration")
 end
