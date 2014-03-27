@@ -13,11 +13,7 @@ module ActsAsEstimate::InstanceMethods
         # If only a number is entered, assume units are days.
         new_value = "#{new_value}d"
       end
-      if new_value.to_i == 0
-        duration = 0
-      else
-        duration = ChronicDuration.parse(new_value)
-      end
+      duration = ChronicDuration.parse(new_value) || 0
       send("#{field_name}=", duration / 60) if duration
     end
   end
