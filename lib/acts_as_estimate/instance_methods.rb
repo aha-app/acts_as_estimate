@@ -7,6 +7,7 @@ module ActsAsEstimate::InstanceMethods
   def write_estimate_field(field_name, new_value)
     if new_value.blank?
       send("#{field_name}=", nil)
+      return
     end
       
     new_value = new_value.to_s.strip!
