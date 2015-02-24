@@ -10,7 +10,7 @@ module ActsAsEstimate::InstanceMethods
       return
     end
       
-    new_value = new_value.to_s.strip!
+    new_value = new_value.to_s.strip
     if estimate_units == ActsAsEstimate::ESTIMATE_UNITS_STORY_POINTS
       send("#{field_name}=", new_value.gsub(/p/, "").to_i)
     else
