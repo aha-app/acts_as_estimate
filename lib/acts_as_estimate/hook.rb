@@ -7,12 +7,16 @@ module ActsAsEstimate::Hook
     include ActsAsEstimate::InstanceMethods
 
     units_fields = self.units_fields rescue []
-    units_fields.push(options[:units_field].intern)
+    units_fields = units_fields.push(options[:units_field].intern).uniq
 
     class_exec(units_fields) do |units_fields|
+      define_singleton_method :units_fields do
+        units_fields
+      end
+
       # The logic of write_estimate_field depends on the units field being set first
       define_method :assign_attributes do |new_attributes, a_options={}|
-        priority_assigns = new_attributes.keys.map(&:intern) & units_fields
+        priority_assigns = new_attributes.keys.map(&:intern) & self.class.units_fields
         priority_assigns.each do |key|
           self.send("#{key}=", new_attributes[key] || new_attributes[key.to_s])
         end
