@@ -12,7 +12,7 @@ module ActsAsEstimate::InstanceMethods
       
     new_value = new_value.to_s.strip
     if estimate_units == ActsAsEstimate::ESTIMATE_UNITS_STORY_POINTS
-      send("#{field_name}=", new_value.gsub(/p/, "").to_i)
+      send("#{field_name}=", new_value.gsub(/p/, ""))
     else
       if new_value =~ /^[0-9.]+$/
         # If only a number is entered, assume units are days.
@@ -26,7 +26,7 @@ module ActsAsEstimate::InstanceMethods
   def estimate_value_to_text(value)
     unless value.nil?
       if estimate_units == ActsAsEstimate::ESTIMATE_UNITS_STORY_POINTS
-        "#{value}p"
+        "%gp" % value
       elsif value == 0
         "0"
       else
